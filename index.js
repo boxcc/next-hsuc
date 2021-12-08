@@ -30,7 +30,8 @@ class Hsuc {
     this.options.path = compiler.options.output.path;
 
     // 打包完成后
-    compiler.plugin('afterEmit', async compilation => {
+    // 支持wepack5
+    compiler.hooks.afterEmit.tapPromise('afterEmit', async compilation => {
       let {isServer} = this.options;
       global.uploadFiles = global.uploadFiles || new Set();
 
@@ -100,7 +101,7 @@ class Hsuc {
 
         switch(true){
           case file.isFile() && assets.indexOf(folder + file.name) !== -1:
-            CDNPath = this.options.cloudFolder + filePath.replace(this.options.dir, "").replace(/^[\\\/]/, "");
+            CDNPath = this.options.cloudFolder + filePath.replace(this.options.dir, "").replace(/^[\\\/]/, "").replace('.next', '_next');
             result = await this.cloud.uploadFile(filePath, CDNPath, this.options.cover);
               ++this.uploaded;
             if(result){
