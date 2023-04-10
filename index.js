@@ -114,10 +114,10 @@ class Hsuc {
               );
             }
             break;
-          case file.isFile():
-            await Base.delFile(filePath);
-            // this.message("删除本地文件：", folder + file.name);
-            break;
+          // case file.isFile():
+          //   await Base.delFile(filePath);
+          //   this.message("删除本地文件：", folder + file.name);
+          //   break;
         }
         if(!file.isFile()) await this.upload(filePath, folder+file.name+"/");
       }
